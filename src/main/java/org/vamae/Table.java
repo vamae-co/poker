@@ -9,9 +9,11 @@ import java.util.Optional;
 public class Table {
     @Getter
     private final List<Player> players;
+    private final Settings settings;
     private GameState state;
 
-    public Table() {
+    public Table(Settings settings) {
+        this.settings = settings;
         players = new ArrayList<>();
         state = new WaitingState(this);
     }
