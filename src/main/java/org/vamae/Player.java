@@ -1,15 +1,21 @@
 package org.vamae;
 
-import org.vamae.Card;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Player {
     private List<Card> hand;
+    private PlayerState state;
 
     public Player(){
         hand = new ArrayList<>();
+    }
+
+    protected void changeState(PlayerState newState) {
+        state = newState;
     }
 
     public void take(Card card) {
