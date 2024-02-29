@@ -10,6 +10,7 @@ public class Table {
     @Getter
     private final List<Player> players;
     private GameState state;
+    private int indexOfNextDealer = 0;
 
     public Table() {
         players = new ArrayList<>();
@@ -26,5 +27,9 @@ public class Table {
 
     protected void changeState(GameState newState) {
         state = newState;
+    }
+
+    protected int getIndexOfNextDealer() {
+        return indexOfNextDealer++;
     }
 }

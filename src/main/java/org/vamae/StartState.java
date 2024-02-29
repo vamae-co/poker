@@ -7,6 +7,7 @@ public class StartState extends GameState {
         super(table);
 
         deck = new Deck();
+        int indexOfDealer = table.getIndexOfNextDealer();
 
         players.forEach(player -> {
             player.take(deck.deal());
