@@ -1,26 +1,26 @@
-package org.vamae.models;
+package org.vamae;
 
 import java.util.*;
 
 public class Deck {
     private final List<Card> cards;
 
-    protected Deck() {
+    public Deck() {
         cards = new ArrayList<>();
 
-        for (int suit = 0; suit < Suit.Blank.ordinal(); suit++) {
-            for (int rank = 0; rank < Rank.Blank.ordinal(); rank++) {
+        for (int suit = 1; suit < Suit.values().length; suit++) {
+            for (int rank = 1; rank < Rank.values().length; rank++) {
                 cards.add(new Card(Suit.values()[suit], Rank.values()[rank]));
             }
         }
         shuffle();
     }
 
-    protected void shuffle() {
+    public void shuffle() {
         Collections.shuffle(cards);
     }
 
-    protected int size() {
-        return cards.size();
+    public Card deal() {
+        return cards.removeFirst();
     }
 }

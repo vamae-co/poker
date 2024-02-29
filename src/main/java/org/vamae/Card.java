@@ -1,4 +1,4 @@
-package org.vamae.models;
+package org.vamae;
 
 public class Card {
     private final Suit suit;
