@@ -8,8 +8,8 @@ public class Deck {
     protected Deck() {
         cards = new ArrayList<>();
 
-        for (int suit = 0; suit < Suit.Blank.ordinal(); suit++) {
-            for (int rank = 0; rank < Rank.Blank.ordinal(); rank++) {
+        for (int suit = 1; suit < Suit.values().length; suit++) {
+            for (int rank = 1; rank < Rank.values().length; rank++) {
                 cards.add(new Card(Suit.values()[suit], Rank.values()[rank]));
             }
         }
