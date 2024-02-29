@@ -11,8 +11,10 @@ public class Table {
     private final List<Player> players;
     private GameState state;
     private int indexOfNextDealer = 0;
+    private Settings settings;
 
-    public Table() {
+    public Table(Settings settings) {
+        this.settings = settings;
         players = new ArrayList<>();
         state = new WaitingState(this);
     }
