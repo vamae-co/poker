@@ -1,6 +1,8 @@
 package org.vamae;
 
 import lombok.Getter;
+import org.vamae.state.game.GameState;
+import org.vamae.state.game.WaitingState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class Table {
         return state.start();
     }
 
-    protected void changeState(GameState newState) {
+    public void changeState(GameState newState) {
         state = newState;
     }
 }

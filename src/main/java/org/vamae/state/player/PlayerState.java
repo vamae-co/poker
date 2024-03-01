@@ -1,4 +1,6 @@
-package org.vamae;
+package org.vamae.state.player;
+
+import org.vamae.Player;
 
 public abstract class PlayerState {
     private Player player;

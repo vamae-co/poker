@@ -1,5 +1,7 @@
 package org.vamae;
 
+import org.vamae.state.player.PlayerState;
+
 import java.util.ArrayList;
 import java.util.List;
 
