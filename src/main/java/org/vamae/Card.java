@@ -8,9 +8,4 @@ public class Card {
         this.suit = suit;
         this.rank = rank;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%s, %s", suit, rank);
-    }
 }

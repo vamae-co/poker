@@ -1,24 +1,29 @@
 package org.vamae;
 
-import lombok.Getter;
+import org.vamae.state.player.PlayerState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class Player {
+    private Long id;
+
     private List<Card> hand;
     private PlayerState state;
 
-    public Player(){
-        hand = new ArrayList<>();
-    }
+    private double bank;
+    private List<Deal> bets;
 
-    protected void changeState(PlayerState newState) {
-        state = newState;
+    public Player(){
+        bets = new ArrayList<>();
+        hand = new ArrayList<>();
     }
 
     public void take(Card card) {
         hand.add(card);
+    }
+
+    public void changeState(PlayerState newState) {
+        state = newState;
     }
 }

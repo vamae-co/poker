@@ -1,4 +1,8 @@
-package org.vamae;
+package org.vamae.state.game;
+
+import org.vamae.Deck;
+import org.vamae.Player;
+import org.vamae.Table;
 
 import java.util.List;
 import java.util.Optional;
