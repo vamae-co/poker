@@ -8,4 +8,6 @@ public abstract class PlayerState {
     public PlayerState(Player player) {
         this.player = player;
     }
+    public abstract boolean pass();
+    public abstract void makeBet();
 }
