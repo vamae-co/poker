@@ -3,11 +3,14 @@ package org.vamae.state.player;
 import org.vamae.Player;
 
 public abstract class PlayerState {
-    private Player player;
+    private final Player player;
 
     public PlayerState(Player player) {
         this.player = player;
     }
-    public abstract boolean pass();
-    public abstract void makeBet();
+    public abstract boolean check();
+    public abstract boolean bet(int amount);
+    public abstract boolean call();
+    public abstract boolean raise(int amount);
+    public abstract boolean fold();
 }

@@ -12,7 +12,7 @@ public class WaitingState extends GameState {
 
     @Override
     public Optional<Player> join() {
-        Player player = new Player();
+        Player player = new Player(players.size() + 1);
         players.add(player);
         return Optional.of(player);
     }
