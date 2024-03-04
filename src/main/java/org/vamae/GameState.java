@@ -15,4 +15,10 @@ public abstract class GameState {
 
     public abstract Optional<Player> join();
     public abstract boolean start();
+
+    public abstract void onCheck();
+    public abstract void onCall();
+    public abstract void onBet();
+    public abstract void onFold();
+    public abstract void onRaise();
 }
