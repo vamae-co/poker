@@ -9,7 +9,7 @@ public class WaitingState extends GameState {
 
     @Override
     public Optional<Player> join() {
-        Player player = new Player();
+        Player player = new Player(players.size() + 1, table);
         players.add(player);
         return Optional.of(player);
     }
@@ -17,9 +17,29 @@ public class WaitingState extends GameState {
     @Override
     public boolean start() {
         if (players.size() > 1) {
-            table.changeState(new StartState(table));
+            table.changeState(new PreFlopState(table));
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCheck() {
+    }
+
+    @Override
+    public void onCall() {
+    }
+
+    @Override
+    public void onBet() {
+    }
+
+    @Override
+    public void onFold() {
+    }
+
+    @Override
+    public void onRaise() {
     }
 }
