@@ -11,8 +11,8 @@ public class Table {
     private GameState state;
     @Getter
     private final List<Player> players;
-    private int nextDealerIndex;
     private int pot;
+    @Getter
     private int currentPlayerIndex;
     @Getter
     private int currentBet;
@@ -33,14 +33,37 @@ public class Table {
         return state.start();
     }
 
-    protected void changeState(GameState newState) {
-        state = newState;
+    public void check() {
+        state.onCheck();
     }
 
-    protected Player getNextDealerAndUpdateCurrentPlayer() {
-        Player dealer = players.get(nextDealerIndex);
-        setNextDealerIndex(nextDealerIndex + 1);
-        return dealer;
+    public void call() {
+        state.onCall();
+    }
+
+    public void bet(int amount) {
+        if (amount < settings.smallBlind() * 2) {
+            return;
+        }
+        currentBet += amount;
+        state.onBet(amount);
+    }
+
+    public void fold() {
+        state.onFold();
+    }
+
+    public void raise(int betAndRaise) {
+        int previousBet = currentBet - getCurrentPlayer().getCurrentBet();
+        if (betAndRaise <= previousBet) {
+            return;
+        }
+        currentBet += betAndRaise - previousBet;
+        state.onRaise(betAndRaise);
+    }
+
+    protected void changeState(GameState newState) {
+        state = newState;
     }
 
     protected Player getCurrentPlayer() {
@@ -57,7 +80,12 @@ public class Table {
     }
 
     protected int countUnfoldedPlayers() {
-        return (int) players.stream().filter(player -> !player.isFolded()).count();
+        return (int) players
+                .stream()
+                .filter(player -> !player.isFolded())
+                .count();
+    }
+
     protected void addToPot(int amount) {
         pot += amount;
     }
