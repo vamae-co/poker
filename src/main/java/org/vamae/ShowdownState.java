@@ -5,6 +5,7 @@ import java.util.Optional;
 public class ShowdownState extends GameState {
     public ShowdownState(Table table) {
         super(table);
+        players.add(players.removeFirst());
     }
 
     @Override
@@ -18,27 +19,26 @@ public class ShowdownState extends GameState {
     }
 
     @Override
-    public void onCheck() {
+    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
+    }
 
+    @Override
+    public void onCheck() {
     }
 
     @Override
     public void onCall() {
-
     }
 
     @Override
-    public void onBet() {
-
+    public void onBet(int amount) {
     }
 
     @Override
     public void onFold() {
-
     }
 
     @Override
-    public void onRaise() {
-
+    public void onRaise(int amount) {
     }
 }

@@ -2,18 +2,10 @@ package org.vamae;
 
 import java.util.Optional;
 
-public class PreFlopState extends GameState {
-    public PreFlopState(Table table) {
+public class FlopState extends GameState {
+
+    public FlopState(Table table) {
         super(table);
-
-        deck = new Deck();
-        lastPlayer = players.getLast();
-
-        players.forEach(player -> {
-            player.setFolded(false);
-            player.take(deck.deal());
-            player.take(deck.deal());
-        });
     }
 
     @Override
@@ -29,7 +21,7 @@ public class PreFlopState extends GameState {
     @Override
     protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
         if (player == lastPlayer) {
-            table.changeState(new FlopState(table));
+            table.changeState(new TurnState(table));
         }
         table.moveToNextPlayer();
     }
