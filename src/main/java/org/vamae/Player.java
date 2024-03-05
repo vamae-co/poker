@@ -7,21 +7,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final int id;
-    private final Table table;
     private List<Card> hand;
+    private int chips;
+    @Getter
+    private int currentBet;
     @Getter
     @Setter
     private boolean isFolded;
+    @Getter
+    private boolean isAllIn;
 
-    public Player(int id, Table table){
-        this.id = id;
-        this.table = table;
+    public Player(){
         hand = new ArrayList<>();
+        chips = 1000;
         isFolded = false;
     }
 
-    public void take(Card card) {
+    protected void take(Card card) {
         hand.add(card);
+    }
+
+    protected int bet(int amount) {
+        currentBet += amount;
+        return subtractChipsOrAllIn(amount);
+    }
+
+    protected int subtractChipsOrAllIn(int amount) {
+        if (amount > chips) {
+            int result = chips;
+            chips = 0;
+            isAllIn = true;
+            return result;
+        }
+        chips -= amount;
+        return amount;
     }
 }

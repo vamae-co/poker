@@ -12,25 +12,17 @@ public class Table {
     @Getter
     private final List<Player> players;
     private int nextDealerIndex;
+    private int pot;
     private int currentPlayerIndex;
+    @Getter
+    private int currentBet;
 
     public Table(Settings settings) {
         this.settings = settings;
         players = new ArrayList<>();
+        pot = 0;
         state = new WaitingState(this);
-        setNextDealerIndex(0);
-    }
-
-    protected void setNextDealerIndex(int index) {
-        if (index >= players.size()) {
-            index = 0;
-        }
-        nextDealerIndex = index;
-        updateCurrentPlayerIndex();
-    }
-
-    protected void updateCurrentPlayerIndex() {
-        currentPlayerIndex = nextDealerIndex + 3;
+        currentBet = settings.smallBlind() * 2;
     }
 
     public Optional<Player> join() {
@@ -66,5 +58,7 @@ public class Table {
 
     protected int countUnfoldedPlayers() {
         return (int) players.stream().filter(player -> !player.isFolded()).count();
+    protected void addToPot(int amount) {
+        pot += amount;
     }
 }
