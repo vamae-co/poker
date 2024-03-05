@@ -1,16 +1,24 @@
 package org.vamae;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Table {
+    @Getter
     private final Settings settings;
     private GameState state;
     @Getter
     private final List<Player> players;
+    @Getter
+    @Setter
+    private List<Card> cards;
+    @Getter
+    @Setter
+    private Deck deck;
     private int pot;
     @Getter
     private int currentPlayerIndex;
@@ -34,32 +42,33 @@ public class Table {
     }
 
     public void check() {
-        state.onCheck();
+        if (getCurrentPlayer().getCurrentBet() == currentBet) {
+            state.onCheck();
+        }
     }
 
     public void call() {
-        state.onCall();
+        if (getCurrentPlayer().getCurrentBet() != currentBet) {
+            state.onCall();
+        }
     }
 
     public void bet(int amount) {
-        if (amount < settings.smallBlind() * 2) {
-            return;
+        if (getCurrentPlayer().getCurrentBet() == currentBet) {
+            state.onBet(amount);
         }
-        currentBet += amount;
-        state.onBet(amount);
     }
 
     public void fold() {
-        state.onFold();
+        if (getCurrentPlayer().getCurrentBet() != currentBet) {
+            state.onFold();
+        }
     }
 
-    public void raise(int betAndRaise) {
-        int previousBet = currentBet - getCurrentPlayer().getCurrentBet();
-        if (betAndRaise <= previousBet) {
-            return;
+    public void raise(int callAndRaise) {
+        if (getCurrentPlayer().getCurrentBet() != currentBet) {
+            state.onRaise(callAndRaise);
         }
-        currentBet += betAndRaise - previousBet;
-        state.onRaise(betAndRaise);
     }
 
     protected void changeState(GameState newState) {
@@ -88,5 +97,9 @@ public class Table {
 
     protected void addToPot(int amount) {
         pot += amount;
+    }
+
+    protected void addToCurrentBet(int amount) {
+        currentBet += amount;
     }
 }
