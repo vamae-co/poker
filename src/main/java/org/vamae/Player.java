@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Player {
     private List<Card> hand;
+    @Getter
     private int chips;
     @Getter
     private int currentBet;

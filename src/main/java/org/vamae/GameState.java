@@ -7,22 +7,29 @@ import java.util.Optional;
 public abstract class GameState {
     protected final Table table;
     protected List<Player> players;
+    protected List<Card> cards;
     protected Deck deck;
     protected Player lastPlayer;
 
     public GameState(Table table) {
         this.table = table;
         players = table.getPlayers();
+        deck = table.getDeck();
+        cards = table.getCards();
     }
 
     public abstract Optional<Player> join();
+
     public abstract boolean start();
+
     protected abstract void changeStateIfNeedsAndMoveToNextPlayer(Player player);
 
 
     public void onCheck() {
         Player player = table.getCurrentPlayer();
-        changeStateIfNeedsAndMoveToNextPlayer(player);
+        if (player.getCurrentBet() == table.getCurrentBet()) {
+            changeStateIfNeedsAndMoveToNextPlayer(player);
+        }
     }
 
     public void onCall() {
@@ -40,9 +47,13 @@ public abstract class GameState {
 
     public void onBet(int amount) {
         Player player = table.getCurrentPlayer();
-        player.bet(amount);
-        table.addToPot(amount);
-        changeStateIfNeedsAndMoveToNextPlayer(player);
+        if (amount >= table.getSettings().smallBlind() * 2
+                && amount <= player.getChips()) {
+            table.addToCurrentBet(amount);
+            player.bet(amount);
+            table.addToPot(amount);
+            changeStateIfNeedsAndMoveToNextPlayer(player);
+        }
     }
 
     public void onFold() {
@@ -57,15 +68,22 @@ public abstract class GameState {
         changeStateIfNeedsAndMoveToNextPlayer(player);
     }
 
-    public void onRaise(int amount) {
-        shiftPlayers(table.getCurrentPlayerIndex());
-
-        updateLastPlayer();
-
-        onBet(amount);
+    public void onRaise(int callAndRaise) {
+        Player player = table.getCurrentPlayer();
+        int call = table.getCurrentBet() - player.getCurrentBet();
+        int raise = callAndRaise - call;
+        if (raise >= table.getSettings().smallBlind() * 2
+                && callAndRaise <= player.getChips()) {
+            player.bet(callAndRaise);
+            table.addToPot(callAndRaise);
+            table.addToCurrentBet(raise);
+            shiftPlayers(table.getCurrentPlayerIndex());
+            updateLastPlayer();
+            changeStateIfNeedsAndMoveToNextPlayer(player);
+        }
     }
 
-    private void shiftPlayers(int offset) {
+    protected void shiftPlayers(int offset) {
         List<Player> movedList = new ArrayList<>();
         movedList.addAll(players.subList(offset, players.size()));
         movedList.addAll(players.subList(0, offset));

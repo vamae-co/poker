@@ -1,11 +1,18 @@
 package org.vamae;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FlopState extends GameState {
 
     public FlopState(Table table) {
         super(table);
+
+        cards.addAll(List.of(
+                deck.deal(),
+                deck.deal(),
+                deck.deal()
+        ));
     }
 
     @Override

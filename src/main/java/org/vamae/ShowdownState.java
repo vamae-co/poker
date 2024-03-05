@@ -39,6 +39,6 @@ public class ShowdownState extends GameState {
     }
 
     @Override
-    public void onRaise(int amount) {
+    public void onRaise(int callAndRaise) {
     }
 }

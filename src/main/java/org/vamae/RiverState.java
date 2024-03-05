@@ -5,6 +5,7 @@ import java.util.Optional;
 public class RiverState extends GameState {
     public RiverState(Table table) {
         super(table);
+        cards.add(deck.deal());
     }
 
     @Override

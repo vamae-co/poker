@@ -5,6 +5,7 @@ import java.util.Optional;
 public class TurnState extends GameState {
     public TurnState(Table table) {
         super(table);
+        cards.add(deck.deal());
     }
 
     @Override
