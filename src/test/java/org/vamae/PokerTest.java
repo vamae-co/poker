@@ -71,15 +71,15 @@ class PokerTest {
     @Test
     public void testThreeOfAKind() {
         List<Card> tableCards = Arrays.asList(
-                new Card(Suit.HEART, Rank.TWO),
+                new Card(Suit.HEART, Rank.JACK),
                 new Card(Suit.DIAMOND, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.TWO),
-                new Card(Suit.SPADE, Rank.EIGHT),
+                new Card(Suit.CLUB, Rank.ACE),
+                new Card(Suit.SPADE, Rank.FOUR),
                 new Card(Suit.DIAMOND, Rank.TWO)
         );
 
         List<Card> playerCards = Arrays.asList(
-                new Card(Suit.DIAMOND, Rank.ACE),
+                new Card(Suit.DIAMOND, Rank.FOUR),
                 new Card(Suit.SPADE, Rank.TEN)
         );
 
