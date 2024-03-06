@@ -1,5 +1,5 @@
 package org.vamae;
 
 public enum Suit {
-    Blank, Heart, Club, Spade, Diamond
+    BLANK, HEART, CLUB, SPADE, DIAMOND
 }
