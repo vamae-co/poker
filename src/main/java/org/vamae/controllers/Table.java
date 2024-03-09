@@ -2,20 +2,18 @@ package org.vamae.controllers;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.vamae.controllers.states.GameState;
+import org.vamae.controllers.states.WaitingState;
+import org.vamae.models.Deck;
+import org.vamae.models.Player;
 import org.vamae.models.PokerHand;
 import org.vamae.models.enums.Combination;
 import org.vamae.models.records.Card;
-import org.vamae.models.Deck;
-import org.vamae.models.Player;
 import org.vamae.models.records.Settings;
-import org.vamae.controllers.states.GameState;
-import org.vamae.controllers.states.WaitingState;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Table {
     @Getter

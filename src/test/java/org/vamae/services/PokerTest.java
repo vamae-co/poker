@@ -1,7 +1,7 @@
 package org.vamae.services;
 
 import org.junit.jupiter.api.Test;
-import org.vamae.models.*;
+import org.vamae.models.PokerHand;
 import org.vamae.models.enums.Combination;
 import org.vamae.models.enums.Rank;
 import org.vamae.models.enums.Suit;
@@ -10,7 +10,7 @@ import org.vamae.models.records.Card;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PokerTest {
     @Test
