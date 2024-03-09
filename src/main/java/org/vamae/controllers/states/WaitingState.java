@@ -1,20 +1,28 @@
-package org.vamae;
+package org.vamae.controllers.states;
+
+import org.vamae.controllers.Table;
+import org.vamae.models.Player;
 
 import java.util.Optional;
 
-public class ShowdownState extends GameState {
-    public ShowdownState(Table table) {
+public class WaitingState extends GameState {
+    public WaitingState(Table table) {
         super(table);
-        players.add(players.removeFirst());
     }
 
     @Override
     public Optional<Player> join() {
-        return Optional.empty();
+        Player player = new Player(table);
+        players.add(player);
+        return Optional.of(player);
     }
 
     @Override
     public boolean start() {
+        if (players.size() > 1) {
+            table.changeState(new PreFlopState(table));
+            return true;
+        }
         return false;
     }
 

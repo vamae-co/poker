@@ -1,4 +1,10 @@
-package org.vamae;
+package org.vamae.services;
+
+import org.vamae.models.*;
+import org.vamae.models.enums.Combination;
+import org.vamae.models.enums.Rank;
+import org.vamae.models.enums.Suit;
+import org.vamae.models.records.Card;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -199,11 +205,12 @@ public class Poker {
                 .map(
                         list -> list
                                 .stream()
-                                .sorted(Comparator.comparing(Card::rank)
-                                        .reversed())
+                                .sorted(Comparator.comparing(Card::rank).reversed())
                                 .limit(5)
                                 .toList()
                 )
                 .findAny();
     }
+
+
 }

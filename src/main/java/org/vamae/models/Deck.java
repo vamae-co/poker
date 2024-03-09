@@ -1,4 +1,8 @@
-package org.vamae;
+package org.vamae.models;
+
+import org.vamae.models.enums.Rank;
+import org.vamae.models.enums.Suit;
+import org.vamae.models.records.Card;
 
 import java.util.*;
 

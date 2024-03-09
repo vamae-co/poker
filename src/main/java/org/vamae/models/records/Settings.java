@@ -1,4 +1,4 @@
-package org.vamae;
+package org.vamae.models.records;
 
 public record Settings(
         int smallBlind,

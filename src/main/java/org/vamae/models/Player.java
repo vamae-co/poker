@@ -1,13 +1,19 @@
-package org.vamae;
+package org.vamae.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.vamae.models.records.Card;
+import org.vamae.services.Poker;
+import org.vamae.controllers.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private final Table table;
     private List<Card> hand;
+    @Getter
+    private PokerHand pokerHand;
     @Getter
     private int chips;
     @Getter
@@ -18,17 +24,19 @@ public class Player {
     @Getter
     private boolean isAllIn;
 
-    public Player(){
+    public Player(Table table){
+        this.table = table;
         hand = new ArrayList<>();
         chips = 1000;
         isFolded = false;
     }
 
-    protected void take(Card card) {
+    public void take(Card card) {
         hand.add(card);
+        pokerHand = Poker.check(table.getCards(), hand);
     }
 
-    protected int bet(int amount) {
+    public int bet(int amount) {
         currentBet += amount;
         return subtractChipsOrAllIn(amount);
     }
@@ -42,5 +50,9 @@ public class Player {
         }
         chips -= amount;
         return amount;
+    }
+
+    public void addChips(int amount) {
+        chips += amount;
     }
 }

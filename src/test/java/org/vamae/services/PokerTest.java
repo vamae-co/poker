@@ -1,6 +1,11 @@
-package org.vamae;
+package org.vamae.services;
 
 import org.junit.jupiter.api.Test;
+import org.vamae.models.*;
+import org.vamae.models.enums.Combination;
+import org.vamae.models.enums.Rank;
+import org.vamae.models.enums.Suit;
+import org.vamae.models.records.Card;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +29,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.HIGH_CARD, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.HIGH_CARD, result.getCombination());
     }
 
     @Test
@@ -44,8 +49,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.ONE_PAIR, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.ONE_PAIR, result.getCombination());
     }
 
     @Test
@@ -64,8 +69,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.TWO_PAIR, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.TWO_PAIR, result.getCombination());
     }
 
     @Test
@@ -84,8 +89,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.THREE_OF_A_KIND, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.THREE_OF_A_KIND, result.getCombination());
     }
 
     @Test
@@ -104,8 +109,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.STRAIGHT, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.STRAIGHT, result.getCombination());
     }
 
     @Test
@@ -124,8 +129,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.FLUSH, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.FLUSH, result.getCombination());
     }
 
     @Test
@@ -144,8 +149,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.FULL_HOUSE, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.FULL_HOUSE, result.getCombination());
     }
 
     @Test
@@ -164,8 +169,8 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.FOUR_OF_A_KIND, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.FOUR_OF_A_KIND, result.getCombination());
     }
 
     @Test
@@ -184,7 +189,7 @@ class PokerTest {
         );
 
         PokerHand result = Poker.check(tableCards, playerCards);
-        result.cards.forEach(System.out::println);
-        assertEquals(Combination.STRAIGHT_FLUSH, result.combination);
+        result.getCards().forEach(System.out::println);
+        assertEquals(Combination.STRAIGHT_FLUSH, result.getCombination());
     }
 }

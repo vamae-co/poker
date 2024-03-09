@@ -1,4 +1,7 @@
-package org.vamae;
+package org.vamae.controllers.states;
+
+import org.vamae.controllers.Table;
+import org.vamae.models.Player;
 
 import java.util.List;
 import java.util.Optional;

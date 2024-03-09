@@ -1,9 +1,12 @@
-package org.vamae;
+package org.vamae.controllers.states;
+
+import org.vamae.controllers.Table;
+import org.vamae.models.Player;
 
 import java.util.Optional;
 
-public class TurnState extends GameState {
-    public TurnState(Table table) {
+public class RiverState extends GameState {
+    public RiverState(Table table) {
         super(table);
         cards.add(deck.deal());
     }
@@ -21,7 +24,7 @@ public class TurnState extends GameState {
     @Override
     protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
         if (player == lastPlayer) {
-            table.changeState(new RiverState(table));
+            table.changeState(new ShowdownState(table));
         }
         table.moveToNextPlayer();
     }

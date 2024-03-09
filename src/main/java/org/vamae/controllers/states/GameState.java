@@ -1,4 +1,9 @@
-package org.vamae;
+package org.vamae.controllers.states;
+
+import org.vamae.controllers.Table;
+import org.vamae.models.records.Card;
+import org.vamae.models.Deck;
+import org.vamae.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
