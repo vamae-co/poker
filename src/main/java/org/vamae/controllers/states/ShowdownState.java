@@ -8,6 +8,9 @@ import java.util.Optional;
 public class ShowdownState extends GameState {
     public ShowdownState(Table table) {
         super(table);
+
+        table.findAndRewardWinner();
+
         players.add(players.removeFirst());
     }
 
