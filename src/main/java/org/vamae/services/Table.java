@@ -1,9 +1,11 @@
-package org.vamae.controllers;
+package org.vamae.services;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.vamae.controllers.states.GameState;
-import org.vamae.controllers.states.WaitingState;
+import org.vamae.services.states.GameState;
+import org.vamae.services.states.WaitingState;
 import org.vamae.models.Deck;
 import org.vamae.models.Player;
 import org.vamae.models.PokerHand;
@@ -13,24 +15,22 @@ import org.vamae.models.records.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class Table {
-    @Getter
     private final Settings settings;
+    @Setter
     private GameState state;
-    @Getter
-    private final List<Player> players;
-    @Getter
+    @Setter
+    private List<Player> players;
     @Setter
     private List<Card> cards;
-    @Getter
     @Setter
     private Deck deck;
     private int pot;
-    @Getter
     private int currentPlayerIndex;
-    @Getter
     private int currentBet;
 
     public Table(Settings settings) {
@@ -41,12 +41,16 @@ public class Table {
         currentBet = settings.smallBlind() * 2;
     }
 
-    public Optional<Player> join() {
-        return state.join();
+    public void join() {
+        state.join();
     }
 
-    public boolean start() {
-        return state.start();
+    public void start() {
+        state.start();
+    }
+
+    public void end() {
+        state.end();
     }
 
     public void check() {
@@ -146,6 +150,7 @@ public class Table {
 
     public void changeState(GameState newState) {
         state = newState;
+        state.init();
     }
 
     public Player getCurrentPlayer() {
@@ -174,5 +179,14 @@ public class Table {
 
     public void addToCurrentBet(int amount) {
         currentBet += amount;
+    }
+
+    public void dealCard(Card card) {
+        cards.add(card);
+        players.forEach(Player::updatePokerHand);
+    }
+
+    public void dealCard(List<Card> cards) {
+        cards.forEach(this::dealCard);
     }
 }

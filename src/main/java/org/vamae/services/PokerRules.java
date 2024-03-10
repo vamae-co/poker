@@ -9,7 +9,7 @@ import org.vamae.models.records.Card;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Poker {
+public class PokerRules {
     public static PokerHand check(List<Card> tableCards, List<Card> playerCards) {
         List<Card> allCards = combineCards(tableCards, playerCards);
         allCards.sort(Comparator.comparing(Card::rank));

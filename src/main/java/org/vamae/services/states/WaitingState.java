@@ -1,9 +1,7 @@
-package org.vamae.controllers.states;
+package org.vamae.services.states;
 
-import org.vamae.controllers.Table;
+import org.vamae.services.Table;
 import org.vamae.models.Player;
-
-import java.util.Optional;
 
 public class WaitingState extends GameState {
     public WaitingState(Table table) {
@@ -11,23 +9,29 @@ public class WaitingState extends GameState {
     }
 
     @Override
-    public Optional<Player> join() {
+    public void init() {
+    }
+
+    @Override
+    public void join() {
         Player player = new Player(table);
         players.add(player);
-        return Optional.of(player);
     }
 
     @Override
-    public boolean start() {
+    public void start() {
         if (players.size() > 1) {
             table.changeState(new PreFlopState(table));
-            return true;
         }
-        return false;
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
+    public void end() {
+
+    }
+
+    @Override
+    protected void changeStateIfNeedsAndMoveToNextPlayer() {
     }
 
     @Override
@@ -48,5 +52,10 @@ public class WaitingState extends GameState {
 
     @Override
     public void onRaise(int callAndRaise) {
+    }
+
+    @Override
+    public String toString() {
+        return "Waiting players";
     }
 }

@@ -1,31 +1,35 @@
-package org.vamae.controllers.states;
+package org.vamae.services.states;
 
-import org.vamae.controllers.Table;
-import org.vamae.models.Player;
-
-import java.util.Optional;
+import org.vamae.services.Table;
 
 public class ShowdownState extends GameState {
     public ShowdownState(Table table) {
         super(table);
+    }
 
+    @Override
+    public void init() {
         table.findAndRewardWinner();
 
         players.add(players.removeFirst());
     }
 
     @Override
-    public Optional<Player> join() {
-        return Optional.empty();
+    public void join() {
     }
 
     @Override
-    public boolean start() {
-        return false;
+    public void start() {
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
+    public void end() {
+        table.changeState(new PreFlopState(table));
+        table.moveToNextPlayer();
+    }
+
+    @Override
+    protected void changeStateIfNeedsAndMoveToNextPlayer() {
     }
 
     @Override
@@ -46,5 +50,10 @@ public class ShowdownState extends GameState {
 
     @Override
     public void onRaise(int callAndRaise) {
+    }
+
+    @Override
+    public String toString() {
+        return "Showdown";
     }
 }

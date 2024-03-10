@@ -1,21 +1,28 @@
-package org.vamae.controllers.states;
+package org.vamae.services.states;
 
-import org.vamae.controllers.Table;
+import org.vamae.services.Table;
 import org.vamae.models.Deck;
 import org.vamae.models.Player;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class PreFlopState extends GameState {
     public PreFlopState(Table table) {
         super(table);
+    }
 
+    @Override
+    public void init() {
         int smallBlind = table.getSettings().smallBlind();
         for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getChips() < smallBlind * 2) {
-                players.remove(players.get(i));
+            Player player = players.get(i);
+
+            if (player.getChips() < smallBlind * 2) {
+                players.remove(player);
+                continue;
             }
+
+            player.dropOldInfo();
         }
         if (players.size() < 2) {
             table.changeState(new WaitingState(table));
@@ -32,7 +39,7 @@ public class PreFlopState extends GameState {
 
         shiftPlayers(2);
 
-        lastPlayer = players.getLast();
+        updateLastPlayer();
 
         players.forEach(player -> {
             player.setFolded(false);
@@ -45,24 +52,32 @@ public class PreFlopState extends GameState {
         Player player = table.getCurrentPlayer();
         player.bet(amount);
         table.addToPot(amount);
-        changeStateIfNeedsAndMoveToNextPlayer(player);
+        table.moveToNextPlayer();
     }
 
     @Override
-    public Optional<Player> join() {
-        return Optional.empty();
+    public void join() {
     }
 
     @Override
-    public boolean start() {
-        return false;
+    public void start() {
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
-        if (player == lastPlayer) {
+    public void end() {
+
+    }
+
+    @Override
+    protected void changeStateIfNeedsAndMoveToNextPlayer() {
+        if (table.getCurrentPlayerIndex() == lastPlayerIndex) {
             table.changeState(new FlopState(table));
         }
         table.moveToNextPlayer();
+    }
+
+    @Override
+    public String toString() {
+        return "PreFlop";
     }
 }

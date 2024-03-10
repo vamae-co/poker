@@ -1,13 +1,15 @@
 package org.vamae.models;
 
+import lombok.Setter;
 import org.vamae.models.enums.Rank;
 import org.vamae.models.enums.Suit;
 import org.vamae.models.records.Card;
 
 import java.util.*;
 
+@Setter
 public class Deck {
-    private final List<Card> cards;
+    private List<Card> cards;
 
     public Deck() {
         cards = new ArrayList<>();

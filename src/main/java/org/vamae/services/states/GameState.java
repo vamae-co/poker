@@ -1,39 +1,46 @@
-package org.vamae.controllers.states;
+package org.vamae.services.states;
 
-import org.vamae.controllers.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.vamae.services.Table;
 import org.vamae.models.records.Card;
 import org.vamae.models.Deck;
 import org.vamae.models.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class GameState {
     protected final Table table;
     protected List<Player> players;
     protected List<Card> cards;
     protected Deck deck;
-    protected Player lastPlayer;
+    @Setter
+    @Getter
+    protected int lastPlayerIndex;
 
     public GameState(Table table) {
         this.table = table;
         players = table.getPlayers();
         deck = table.getDeck();
         cards = table.getCards();
+        updateLastPlayer();
     }
 
-    public abstract Optional<Player> join();
+    public abstract void init();
 
-    public abstract boolean start();
+    public abstract void join();
 
-    protected abstract void changeStateIfNeedsAndMoveToNextPlayer(Player player);
+    public abstract void start();
 
+    public abstract void end();
+
+    protected abstract void changeStateIfNeedsAndMoveToNextPlayer();
 
     public void onCheck() {
         Player player = table.getCurrentPlayer();
         if (player.getCurrentBet() == table.getCurrentBet()) {
-            changeStateIfNeedsAndMoveToNextPlayer(player);
+            changeStateIfNeedsAndMoveToNextPlayer();
         }
     }
 
@@ -47,7 +54,7 @@ public abstract class GameState {
         }
 
         table.addToPot(chips);
-        changeStateIfNeedsAndMoveToNextPlayer(player);
+        changeStateIfNeedsAndMoveToNextPlayer();
     }
 
     public void onBet(int amount) {
@@ -57,7 +64,7 @@ public abstract class GameState {
             table.addToCurrentBet(amount);
             player.bet(amount);
             table.addToPot(amount);
-            changeStateIfNeedsAndMoveToNextPlayer(player);
+            changeStateIfNeedsAndMoveToNextPlayer();
         }
     }
 
@@ -70,7 +77,7 @@ public abstract class GameState {
         if (table.countUnfoldedPlayers() == 1) {
             table.changeState(new ShowdownState(table));
         }
-        changeStateIfNeedsAndMoveToNextPlayer(player);
+        changeStateIfNeedsAndMoveToNextPlayer();
     }
 
     public void onRaise(int callAndRaise) {
@@ -84,11 +91,11 @@ public abstract class GameState {
             table.addToCurrentBet(raise);
             shiftPlayers(table.getCurrentPlayerIndex());
             updateLastPlayer();
-            changeStateIfNeedsAndMoveToNextPlayer(player);
+            changeStateIfNeedsAndMoveToNextPlayer();
         }
     }
 
-    protected void shiftPlayers(int offset) {
+    public void shiftPlayers(int offset) {
         List<Player> movedList = new ArrayList<>();
         movedList.addAll(players.subList(offset, players.size()));
         movedList.addAll(players.subList(0, offset));
@@ -96,10 +103,6 @@ public abstract class GameState {
     }
 
     protected void updateLastPlayer() {
-        lastPlayer = players
-                .stream()
-                .filter(player -> !player.isFolded() && !player.isAllIn())
-                .toList()
-                .getLast();
+        lastPlayerIndex = players.size() - 1;
     }
 }

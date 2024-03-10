@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PokerTest {
+class PokerRulesTest {
     @Test
     public void testHighCard() {
         List<Card> tableCards = Arrays.asList(
@@ -28,7 +28,7 @@ class PokerTest {
                 new Card(Suit.SPADE, Rank.TEN)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.HIGH_CARD, result.getCombination());
     }
@@ -36,19 +36,19 @@ class PokerTest {
     @Test
     public void testOnePair() {
         List<Card> tableCards = Arrays.asList(
+                new Card(Suit.CLUB, Rank.FOUR),
                 new Card(Suit.HEART, Rank.TWO),
-                new Card(Suit.DIAMOND, Rank.FOUR),
-                new Card(Suit.CLUB, Rank.TWO),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.HEART, Rank.KING)
+                new Card(Suit.HEART, Rank.QUEEN),
+                new Card(Suit.HEART, Rank.TEN),
+                new Card(Suit.DIAMOND, Rank.QUEEN)
         );
 
         List<Card> playerCards = Arrays.asList(
-                new Card(Suit.DIAMOND, Rank.ACE),
-                new Card(Suit.SPADE, Rank.TEN)
+                new Card(Suit.SPADE, Rank.FIVE),
+                new Card(Suit.DIAMOND, Rank.NINE)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.ONE_PAIR, result.getCombination());
     }
@@ -68,7 +68,7 @@ class PokerTest {
                 new Card(Suit.SPADE, Rank.KING)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.TWO_PAIR, result.getCombination());
     }
@@ -88,7 +88,7 @@ class PokerTest {
                 new Card(Suit.SPADE, Rank.TEN)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.THREE_OF_A_KIND, result.getCombination());
     }
@@ -108,7 +108,7 @@ class PokerTest {
                 new Card(Suit.SPADE, Rank.TEN)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.STRAIGHT, result.getCombination());
     }
@@ -128,7 +128,7 @@ class PokerTest {
                 new Card(Suit.HEART, Rank.TEN)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.FLUSH, result.getCombination());
     }
@@ -148,7 +148,7 @@ class PokerTest {
                 new Card(Suit.CLUB, Rank.FIVE)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.FULL_HOUSE, result.getCombination());
     }
@@ -168,7 +168,7 @@ class PokerTest {
                 new Card(Suit.CLUB, Rank.FIVE)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.FOUR_OF_A_KIND, result.getCombination());
     }
@@ -188,7 +188,7 @@ class PokerTest {
                 new Card(Suit.HEART, Rank.TEN)
         );
 
-        PokerHand result = Poker.check(tableCards, playerCards);
+        PokerHand result = PokerRules.check(tableCards, playerCards);
         result.getCards().forEach(System.out::println);
         assertEquals(Combination.STRAIGHT_FLUSH, result.getCombination());
     }

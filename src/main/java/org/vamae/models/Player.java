@@ -1,39 +1,49 @@
 package org.vamae.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.vamae.models.records.Card;
-import org.vamae.services.Poker;
-import org.vamae.controllers.Table;
+import org.vamae.services.PokerRules;
+import org.vamae.services.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class Player {
     private final Table table;
     private List<Card> hand;
-    @Getter
     private PokerHand pokerHand;
-    @Getter
     private int chips;
-    @Getter
     private int currentBet;
-    @Getter
     @Setter
     private boolean isFolded;
-    @Getter
     private boolean isAllIn;
 
     public Player(Table table){
         this.table = table;
-        hand = new ArrayList<>();
         chips = 1000;
+        dropOldInfo();
+    }
+
+    public void dropOldInfo() {
+        hand = new ArrayList<>();
+        currentBet = 0;
+        isAllIn = false;
         isFolded = false;
     }
 
     public void take(Card card) {
         hand.add(card);
-        pokerHand = Poker.check(table.getCards(), hand);
+        updatePokerHand();
+    }
+
+    public void updatePokerHand() {
+        pokerHand = PokerRules.check(table.getCards(), hand);
     }
 
     public int bet(int amount) {
