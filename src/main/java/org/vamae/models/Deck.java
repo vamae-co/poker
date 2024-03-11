@@ -14,11 +14,10 @@ public class Deck {
     public Deck() {
         cards = new ArrayList<>();
 
-        for (int suit = 1; suit < Suit.values().length; suit++) {
-            for (int rank = 1; rank < Rank.values().length; rank++) {
-                cards.add(new Card(Suit.values()[suit], Rank.values()[rank]));
-            }
-        }
+        Arrays.stream(Suit.values())
+                .forEach(suit -> Arrays.stream(Rank.values())
+                        .forEach(rank -> cards.add(new Card(suit, rank))));
+
         shuffle();
     }
 
