@@ -30,6 +30,7 @@ public class Table {
     @Setter
     private Deck deck;
     private int pot;
+    @Setter
     private int currentPlayerIndex;
     private int currentBet;
 
@@ -38,6 +39,10 @@ public class Table {
         players = new ArrayList<>();
         pot = 0;
         state = new WaitingState(this);
+        dropCurrentBet();
+    }
+
+    public void dropCurrentBet() {
         currentBet = settings.smallBlind() * 2;
     }
 

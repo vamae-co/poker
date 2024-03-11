@@ -15,7 +15,7 @@ public class TableMapper {
                 .cards(table.getCards())
                 .state(table.getState().toString())
                 .currentPlayerIndex(table.getCurrentPlayerIndex())
-                .lastPlayerIndex(table.getState().getLastPlayerIndex())
+                .lastPlayerId(table.getState().getLastPlayerId())
                 .build();
     }
 
@@ -26,14 +26,15 @@ public class TableMapper {
                 .currentBet(table.currentBet())
                 .pot(table.pot())
                 .cards(table.cards())
-                .currentPlayerIndex(table.currentPlayerIndex())
                 .build();
 
         result.setPlayers(PlayerMapper.toPlayer(table.players(), result));
 
         GameState state = fromString(table.state(), result);
-        state.setLastPlayerIndex(table.lastPlayerIndex());
+        state.setLastPlayerId(table.lastPlayerId());
         result.setState(state);
+
+        result.setCurrentPlayerIndex(table.currentPlayerIndex());
 
         return result;
     }

@@ -10,11 +10,13 @@ import org.vamae.services.Table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class Player {
+    private final String id;
     private final Table table;
     private List<Card> hand;
     private PokerHand pokerHand;
@@ -25,6 +27,7 @@ public class Player {
     private boolean isAllIn;
 
     public Player(Table table){
+        this.id = UUID.randomUUID().toString();
         this.table = table;
         chips = 1000;
         dropOldInfo();

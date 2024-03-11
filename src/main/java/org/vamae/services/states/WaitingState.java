@@ -31,7 +31,7 @@ public class WaitingState extends GameState {
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer() {
+    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
     }
 
     @Override

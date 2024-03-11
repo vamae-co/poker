@@ -25,27 +25,31 @@ public class PreFlopState extends GameState {
             player.dropOldInfo();
         }
         if (players.size() < 2) {
+            players.forEach(Player::dropOldInfo);
+
             table.changeState(new WaitingState(table));
+        } else {
+            table.dropCurrentBet();
+
+            table.setDeck(new Deck());
+            deck = table.getDeck();
+
+            table.setCards(new ArrayList<>());
+            cards = table.getCards();
+
+            blind(smallBlind);
+            blind(smallBlind * 2);
+
+            shiftPlayers(2);
+
+            updateLastPlayer();
+
+            players.forEach(player -> {
+                player.setFolded(false);
+                player.take(deck.deal());
+                player.take(deck.deal());
+            });
         }
-
-        table.setDeck(new Deck());
-        deck = table.getDeck();
-
-        table.setCards(new ArrayList<>());
-        cards = table.getCards();
-
-        blind(smallBlind);
-        blind(smallBlind * 2);
-
-        shiftPlayers(2);
-
-        updateLastPlayer();
-
-        players.forEach(player -> {
-            player.setFolded(false);
-            player.take(deck.deal());
-            player.take(deck.deal());
-        });
     }
 
     private void blind(int amount) {
@@ -69,11 +73,12 @@ public class PreFlopState extends GameState {
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer() {
-        if (table.getCurrentPlayerIndex() == lastPlayerIndex) {
+    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
+        if (player.getId().equals(lastPlayerId)) {
             table.changeState(new FlopState(table));
+        } else {
+            table.moveToNextPlayer();
         }
-        table.moveToNextPlayer();
     }
 
     @Override

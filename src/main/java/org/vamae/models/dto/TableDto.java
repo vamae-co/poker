@@ -16,7 +16,7 @@ public record TableDto(
         Deck deck,
         int pot,
         int currentPlayerIndex,
-        int lastPlayerIndex,
+        String lastPlayerId,
         int currentBet
 ) {
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 @Builder
 public record PlayerDto(
+        String id,
         List<CardDto> hand,
         PokerHandDto pokerHand,
         int chips,

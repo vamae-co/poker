@@ -1,5 +1,6 @@
 package org.vamae.services.states;
 
+import org.vamae.models.Player;
 import org.vamae.services.Table;
 
 public class ShowdownState extends GameState {
@@ -25,11 +26,10 @@ public class ShowdownState extends GameState {
     @Override
     public void end() {
         table.changeState(new PreFlopState(table));
-        table.moveToNextPlayer();
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer() {
+    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
     }
 
     @Override

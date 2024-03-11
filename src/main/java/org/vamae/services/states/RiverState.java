@@ -1,5 +1,6 @@
 package org.vamae.services.states;
 
+import org.vamae.models.Player;
 import org.vamae.services.Table;
 
 public class RiverState extends GameState {
@@ -26,11 +27,12 @@ public class RiverState extends GameState {
     }
 
     @Override
-    protected void changeStateIfNeedsAndMoveToNextPlayer() {
-        if (table.getCurrentPlayerIndex() == lastPlayerIndex) {
+    protected void changeStateIfNeedsAndMoveToNextPlayer(Player player) {
+        if (player.getId().equals(lastPlayerId)) {
             table.changeState(new ShowdownState(table));
+        } else {
+            table.moveToNextPlayer();
         }
-        table.moveToNextPlayer();
     }
 
     @Override
