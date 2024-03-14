@@ -2,7 +2,6 @@ package org.vamae.services.mappers;
 
 import org.vamae.models.PokerHand;
 import org.vamae.models.dto.PokerHandDto;
-import org.vamae.models.enums.Combination;
 
 public class PokerHandMapper {
     public static PokerHandDto toDto(PokerHand pokerHand) {
@@ -11,7 +10,7 @@ public class PokerHandMapper {
         }
 
         return new PokerHandDto(
-                pokerHand.getCombination().toString(),
+                pokerHand.getCombination(),
                 CardMapper.toDto(pokerHand.getCards())
         );
     }
@@ -22,7 +21,7 @@ public class PokerHandMapper {
         }
 
         return new PokerHand(
-                Combination.valueOf(pokerHand.combination()),
+                pokerHand.combination(),
                 CardMapper.toCard(pokerHand.cards())
         );
     }

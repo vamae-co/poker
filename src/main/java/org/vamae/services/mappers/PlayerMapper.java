@@ -1,7 +1,7 @@
 package org.vamae.services.mappers;
 
-import org.vamae.models.dto.PlayerDto;
 import org.vamae.models.Player;
+import org.vamae.models.dto.PlayerDto;
 import org.vamae.services.Table;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class PlayerMapper {
     public static PlayerDto toDto(Player player) {
         return PlayerDto.builder()
                 .id(player.getId())
-                .hand(CardMapper.toDto(player.getHand()))
+                .hand(player.getHand())
                 .pokerHand(PokerHandMapper.toDto(player.getPokerHand()))
                 .chips(player.getChips())
                 .currentBet(player.getCurrentBet())
@@ -22,7 +22,7 @@ public class PlayerMapper {
         return Player.builder()
                 .id(player.id())
                 .table(table)
-                .hand(CardMapper.toCard(player.hand()))
+                .hand(player.hand())
                 .pokerHand(PokerHandMapper.toPokerHand(player.pokerHand()))
                 .chips(player.chips())
                 .currentBet(player.currentBet())
